@@ -46,7 +46,9 @@ def validate_tensor(data: Any) -> None:
                 )
             validate_tensor(element)
         elif not is_numeric(element):
-            raise InvalidTensorError(f"Unsupported element type: {type(element).__name__}")
+            raise InvalidTensorError(
+                f"Unsupported element type: {type(element).__name__}"
+            )
 
 
 def compute_shape(data: Any) -> Tuple[int, ...]:

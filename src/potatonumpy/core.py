@@ -77,9 +77,7 @@ class PotatoNumPy:
         flat = flatten(self._data)
         return PotatoNumPy(reshape_flat(flat, new_shape))
 
-    def _broadcast_op(
-        self, other: Any, op_name: str, op_func
-    ) -> PotatoNumPy:
+    def _broadcast_op(self, other: Any, op_name: str, op_func) -> PotatoNumPy:
         """Perform an elementwise operation with scalar broadcasting."""
         if isinstance(other, PotatoNumPy):
             if self._shape != other._shape:
@@ -95,9 +93,7 @@ class PotatoNumPy:
             f"Unsupported operand type for {op_name}: {type(other).__name__}"
         )
 
-    def _r_broadcast_op(
-        self, other: Any, op_name: str, op_func
-    ) -> PotatoNumPy:
+    def _r_broadcast_op(self, other: Any, op_name: str, op_func) -> PotatoNumPy:
         """Perform a reflected elementwise operation with scalar broadcasting."""
         if is_numeric(other):
             result = recursive_apply(self._data, lambda x: op_func(other, x))
@@ -142,10 +138,10 @@ class PotatoNumPy:
         return self._r_broadcast_op(other, "division", safe_div)
 
     def __pow__(self, other: Any) -> PotatoNumPy:
-        return self._broadcast_op(other, "power", lambda a, b: a ** b)
+        return self._broadcast_op(other, "power", lambda a, b: a**b)
 
     def __rpow__(self, other: Any) -> PotatoNumPy:
-        return self._r_broadcast_op(other, "power", lambda a, b: a ** b)
+        return self._r_broadcast_op(other, "power", lambda a, b: a**b)
 
     def __mod__(self, other: Any) -> PotatoNumPy:
         def safe_mod(a: Numeric, b: Numeric) -> Numeric:
@@ -170,6 +166,7 @@ class PotatoNumPy:
         if self._shape != other._shape:
             return False
         from potatonumpy.utils import recursive_equals
+
         return recursive_equals(self._data, other._data)
 
     def __getitem__(self, index: Any) -> Any:

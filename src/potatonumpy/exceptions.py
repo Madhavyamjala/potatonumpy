@@ -3,6 +3,7 @@
 
 class PotatoNumPyError(Exception):
     """Base exception for all PotatoNumPy errors."""
+
     pass
 
 
@@ -13,9 +14,7 @@ class ShapeMismatchError(PotatoNumPyError):
         self.shape_a = shape_a
         self.shape_b = shape_b
         self.operation = operation
-        super().__init__(
-            f"Shape mismatch for {operation}: {shape_a} vs {shape_b}"
-        )
+        super().__init__(f"Shape mismatch for {operation}: {shape_a} vs {shape_b}")
 
 
 class InvalidOperationError(PotatoNumPyError):
@@ -28,7 +27,9 @@ class InvalidOperationError(PotatoNumPyError):
 class InvalidTensorError(PotatoNumPyError):
     """Raised when a tensor has an invalid or inconsistent structure."""
 
-    def __init__(self, message: str = "Invalid tensor structure: inconsistent dimensions"):
+    def __init__(
+        self, message: str = "Invalid tensor structure: inconsistent dimensions"
+    ):
         super().__init__(message)
 
 

@@ -103,7 +103,7 @@ class TestElementwiseOps(unittest.TestCase):
 
     def test_pow_vectors(self):
         a = pp.array([2, 3, 4])
-        result = a ** 2
+        result = a**2
         self.assertEqual(result.tolist(), [4, 9, 16])
 
     def test_mod_vectors(self):

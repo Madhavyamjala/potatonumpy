@@ -26,9 +26,7 @@ def tensor_sum(a: PotatoNumPy, axis: Optional[int] = None) -> Any:
         return _recursive_sum(a.data)
 
     if axis < 0 or axis >= a.ndim:
-        raise InvalidOperationError(
-            f"Axis {axis} out of range for {a.ndim}D array"
-        )
+        raise InvalidOperationError(f"Axis {axis} out of range for {a.ndim}D array")
 
     result = _reduce_axis(a.data, axis, 0, _add_elements)
     if is_numeric(result):
@@ -49,9 +47,7 @@ def tensor_min(a: PotatoNumPy, axis: Optional[int] = None) -> Any:
         return minimum
 
     if axis < 0 or axis >= a.ndim:
-        raise InvalidOperationError(
-            f"Axis {axis} out of range for {a.ndim}D array"
-        )
+        raise InvalidOperationError(f"Axis {axis} out of range for {a.ndim}D array")
 
     result = _reduce_axis(a.data, axis, 0, _min_elements)
     if is_numeric(result):
@@ -72,9 +68,7 @@ def tensor_max(a: PotatoNumPy, axis: Optional[int] = None) -> Any:
         return maximum
 
     if axis < 0 or axis >= a.ndim:
-        raise InvalidOperationError(
-            f"Axis {axis} out of range for {a.ndim}D array"
-        )
+        raise InvalidOperationError(f"Axis {axis} out of range for {a.ndim}D array")
 
     result = _reduce_axis(a.data, axis, 0, _max_elements)
     if is_numeric(result):

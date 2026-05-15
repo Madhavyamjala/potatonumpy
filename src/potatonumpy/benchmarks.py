@@ -43,6 +43,7 @@ def benchmark_vector_addition(size: int = 10000) -> dict:
 
     try:
         import numpy as np
+
         np_a = np.array(list_a)
         np_b = np.array(list_b)
 
@@ -81,6 +82,7 @@ def benchmark_matrix_multiply(size: int = 50) -> dict:
 
     def potatonumpy_matmul():
         from potatonumpy.linalg import matmul
+
         return matmul(pp_a, pp_b)
 
     time_loop = _time_it(pure_loop_matmul)
@@ -94,6 +96,7 @@ def benchmark_matrix_multiply(size: int = 50) -> dict:
 
     try:
         import numpy as np
+
         np_a = np.array(mat_a)
         np_b = np.array(mat_b)
 
@@ -139,6 +142,7 @@ def benchmark_scalar_operations(size: int = 10000) -> dict:
 
     try:
         import numpy as np
+
         np_arr = np.array(data)
 
         def numpy_scalar():

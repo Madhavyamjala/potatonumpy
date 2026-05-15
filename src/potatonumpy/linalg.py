@@ -35,9 +35,7 @@ def _ensure_square(arr: PotatoNumPy, name: str = "array") -> List[List]:
     data = _ensure_matrix(arr, name)
     rows, cols = arr.shape
     if rows != cols:
-        raise InvalidOperationError(
-            f"{name} must be square, got shape {arr.shape}"
-        )
+        raise InvalidOperationError(f"{name} must be square, got shape {arr.shape}")
     return data
 
 
@@ -95,9 +93,7 @@ def matmul(a: PotatoNumPy, b: PotatoNumPy) -> PotatoNumPy:
     rows_b, cols_b = b.shape
 
     if cols_a != rows_b:
-        raise ShapeMismatchError(
-            a.shape, b.shape, "matrix multiplication"
-        )
+        raise ShapeMismatchError(a.shape, b.shape, "matrix multiplication")
 
     result = []
     for i in range(rows_a):
