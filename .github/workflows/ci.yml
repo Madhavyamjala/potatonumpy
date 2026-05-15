@@ -1,0 +1,63 @@
+# Documentation:
+# This workflow performs Continuous Integration for the PotatoNumPy project.
+# It triggers on pushes to the main branch and on any pull requests.
+# The workflow runs a matrix of jobs across multiple operating systems
+# (Ubuntu, Windows, macOS) and Python versions (3.9 to 3.12) to ensure
+# cross-platform compatibility. It installs the package and runs the
+# unittest test suite. A separate linting job checks the code formatting
+# and quality using black and flake8.
+#
+# Notes:
+# - Matrix testing is crucial for ensuring the pure Python loops and
+#   recursions behave identically across all target environments.
+# - The lint job uses Ubuntu and Python 3.13 as the standard environment.
+#
+# TODOS:
+# - Integrate test coverage reporting (e.g., coverage.py or pytest-cov)
+#   and upload results to Codecov or Coveralls.
+# - Add a type-checking job using mypy to strictly enforce type hints.
+
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: "pip"
+      - name: Install linting dependencies
+        run: python -m pip install --upgrade pip black flake8
+      - name: Check formatting with black
+        run: black --check src tests examples
+      - name: Lint with flake8
+        run: flake8 src tests examples --count --select=E9,F63,F7,F82 --show-source --statistics
+
+  test:
+    needs: lint
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+      - name: Install project and dependencies
+        run: python -m pip install --upgrade pip && pip install -e .
+      - name: Run unittests
+        run: python -m unittest discover tests -v

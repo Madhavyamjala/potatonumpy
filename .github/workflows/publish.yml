@@ -1,0 +1,48 @@
+# Documentation:
+# This workflow automates the Continuous Deployment process for PotatoNumPy.
+# It triggers exclusively when a new tag matching the 'v*.*.*' pattern
+# (e.g., v0.1.0) is pushed to the repository. The workflow builds the
+# source distribution and wheel using the standard Python build module.
+# Finally, it publishes the built artifacts to PyPI using PyPI's
+# Trusted Publisher feature (OIDC authentication).
+#
+# Notes:
+# - Trusted Publishing must be configured in the PyPI account settings
+#   to link the PyPI project to this specific GitHub repository.
+# - The environment is strictly set to 'pypi' to define an isolated
+#   deployment target.
+#
+# TODOS:
+# - Create a GitHub Release automatically using actions/gh-release
+#   to attach the build artifacts directly to the repository tags.
+# - Implement an intermediate job to publish to TestPyPI on pushes to
+#   the main branch for pre-release validation.
+
+name: Publish to PyPI
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  build-and-publish:
+    name: Build and Publish
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Install build dependencies
+        run: python -m pip install --upgrade pip build
+      - name: Build sdist and wheel
+        run: python -m build
+      - name: Publish package
+        uses: pypa/gh-action-pypi-publish@release/v1
