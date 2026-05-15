@@ -2,17 +2,22 @@
 # This workflow performs Continuous Integration for the PotatoNumPy project.
 # It triggers on pushes to the main branch and on any pull requests.
 # The workflow runs a matrix of jobs across multiple operating systems
-# (Ubuntu, Windows, macOS) and Python versions (3.9 to 3.12) to ensure
-# cross-platform compatibility. It installs the package and runs the
-# unittest test suite. A separate linting job checks the code formatting
-# and quality using black and flake8.
+# (Ubuntu, Windows, macOS) and Python versions (3.9 to 3.13).
+# It installs the package, runs the unittest suite, and checks formatting.
 #
 # Notes:
+# - The FORCE_JAVASCRIPT_ACTIONS_TO_NODE24 environment variable is applied
+#   globally to ensure all underlying JavaScript actions execute on Node 24,
+#   complying with the GitHub Actions deprecation timeline.
 # - Matrix testing is crucial for ensuring the pure Python loops and
 #   recursions behave identically across all target environments.
-# - The lint job uses Ubuntu and Python 3.13 as the standard environment.
+# - macos-latest resolves to an architecture compatible with Node 24 
+#   (macOS 14+), satisfying the OS removal constraints.
+# - Python 3.13 is set as the primary environment for linting.
 #
 # TODOS:
+# - Monitor actions/checkout and actions/setup-python for major version
+#   bumps that natively default to Node 24 and remove the env flag once upgraded.
 # - Integrate test coverage reporting (e.g., coverage.py or pytest-cov)
 #   and upload results to Codecov or Coveralls.
 # - Add a type-checking job using mypy to strictly enforce type hints.
@@ -24,6 +29,9 @@ on:
     branches:
       - main
   pull_request:
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   lint:
