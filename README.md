@@ -71,6 +71,29 @@ print(pp.diagonal(A))       # [1, 4]
 print(pp.identity(3))
 print(pp.zeros((2, 3)))
 ```
+## Array Manipulation & Attributes
+
+You can inspect array metadata and modify structural dimensions.
+
+```python
+
+import potatonumpy as pp
+
+a = pp.array([[1, 2, 3], [4, 5, 6]])
+
+print(a.ndim)
+print(a.size)
+print(a.shape)
+
+flat = a.flatten()
+print(flat)
+
+reshaped = flat.reshape((3, 2))
+print(reshaped)
+
+raw_list = reshaped.tolist()
+print(raw_list)
+```
 
 ## Tensors? Yeah, We Got Those
 
@@ -147,20 +170,21 @@ Yeah. NumPy is *that* much faster. Here's why:
 python -m unittest discover tests -v
 ```
 
-100 tests covering all operations, edge cases, and error conditions.
+99 tests (One Short 🥲) covering all operations, edge cases, and error conditions.
 
 ## Project Structure
 
 ```
-pythonPy/
-├── potatonumpy/
-│   ├── __init__.py       # Public API — import potatonumpy as pp
-│   ├── core.py           # The PotatoNumPy array class
-│   ├── linalg.py         # All the linear algebra goodness
-│   ├── tensor.py         # Tensor reductions (sum, min, max, mean)
-│   ├── exceptions.py     # Custom exceptions
-│   ├── utils.py          # Recursive helpers
-│   └── benchmarks.py     # Performance showdown
+.
+├── src/
+│   └── potatonumpy/
+│       ├── __init__.py       
+│       ├── core.py           
+│       ├── linalg.py         
+│       ├── tensor.py         
+│       ├── exceptions.py     
+│       ├── utils.py          
+│       └── benchmarks.py     
 ├── tests/
 │   ├── test_core.py
 │   ├── test_linalg.py
