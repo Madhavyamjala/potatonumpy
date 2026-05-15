@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "potatonumpy"
+version = "0.1.0"
+authors = [
+    {name = "Madhav", email = "yrccode@gmail.com"},
+]
+description = "A pure Python linear algebra and tensor library for educational purposes"
+readme = "README.md"
+requires-python = ">=3.9"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Education",
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+    "Topic :: Scientific/Engineering :: Mathematics",
+]
+license = "MIT"
+license-files = ["LICEN[CS]E*"]
+keywords = ["linear-algebra", "tensor", "educational", "pure-python"]
+
+[project.urls]
+Homepage = "https://github.com/Madhavyamjala/potatonumpy"
+Issues = "https://github.com/Madhavyamjala/potatonumpy/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
